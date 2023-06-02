@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.card-container-chat{
+    height: 600px;
+}
+
+.chat{
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.container-chat{
+    height: auto;
+}
