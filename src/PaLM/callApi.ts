@@ -2,18 +2,20 @@ import { DiscussServiceClient } from '@google-ai/generativelanguage'
 import { GoogleAuth } from 'google-auth-library'
 
 const MODEL_NAME: string = 'models/chat-bison-001'
-const API_KEY: string = 'YOUR API KEY'
+const API_KEY: string = process.env.PALM_API_KEY || ''
 
 const client: DiscussServiceClient = new DiscussServiceClient({
    authClient: new GoogleAuth().fromAPIKey(API_KEY),
 })
 
-let context: string = ''
+let context: string = "Tu es un chatbot qui a pour but de répondre à n'importe quelle question."
 let messages: { content: string }[] = []
 
-export const callApi = (message: string): any => {
-   client
-      .generateMessage({
+export const callApi = async (message: string): Promise<any> => {
+   try {
+      messages.push({ content: message })
+
+      const result = client.generateMessage({
          model: MODEL_NAME,
          temperature: 0.25,
          candidateCount: 1,
@@ -25,10 +27,12 @@ export const callApi = (message: string): any => {
             messages: messages,
          },
       })
-      .then((result: any) => {
-         // replace any with appropriate type if possible
-         console.log(JSON.stringify(result, null, 2))
-      })
 
-   return messages
+      return result
+
+      //return [{ id: messages.length, message: message, from: 'user' }, { id: messages.length + 1, message: result.candidates.content, from: 'PaLM' }]
+   } catch (error) {
+      console.error(error)
+      throw new Error('Error in callApi' + error)
+   }
 }
