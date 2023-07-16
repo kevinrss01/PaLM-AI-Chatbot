@@ -19,6 +19,8 @@ interface PalmResponse {
    filters: any[]
 }
 
+const myUrl = 'https://pa-lm-ai-chatbot-fajpzsa6n-kevinrss01.vercel.app/'
+
 const ChatContainer = () => {
    const [message, setMessage] = useState<string>('')
    const [conversation, setConversation] = useState<{ author: string; content: string }[]>([])
@@ -56,10 +58,9 @@ const ChatContainer = () => {
 
          setConversation([...conversation, { author: '0', content: message }])
 
-         const response: AxiosResponse<PalmResponse> = await axios.post(
-            'http://localhost:3000/api/palm',
-            { conversation: conversationWithoutAuthor },
-         )
+         const response: AxiosResponse<PalmResponse> = await axios.post(myUrl, {
+            conversation: conversationWithoutAuthor,
+         })
 
          // @ts-ignore
          if (response?.data[0]?.candidates[0]?.content === undefined) {
