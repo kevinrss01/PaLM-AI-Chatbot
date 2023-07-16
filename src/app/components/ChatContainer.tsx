@@ -76,7 +76,7 @@ const ChatContainer = () => {
       } catch (error) {
          setIsErrorPalm(true)
          toast.error(
-            'Something went wrong, maybe your question was not understood by the AI. Please reload the page and try again.',
+            'Something went wrong, maybe your question was not understood by the AI or you are not located in United States. Please reload the page and try again.',
             {
                position: 'top-right',
                autoClose: false,
