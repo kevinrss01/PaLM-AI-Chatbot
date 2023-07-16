@@ -1,8 +1,9 @@
 import '../styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
+
 import { Title, Icon } from '@tremor/react'
 import { FcGoogle } from 'react-icons/fc'
+import ToastProvider from './components/ToastProvider'
 
 export const metadata = {
    title: 'Create Next App',
@@ -13,24 +14,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
    return (
       <html lang='en'>
          <body className=''>
-            <ToastContainer
-               position='top-right'
-               autoClose={3000}
-               hideProgressBar={false}
-               newestOnTop={false}
-               closeOnClick
-               rtl={false}
-               pauseOnFocusLoss
-               draggable
-               pauseOnHover
-               theme='light'
-            />
-            <header className='h-14 shadow-md mb-10 flex justify-center items-center'>
-               <Title>PaLM Chatbot</Title>
-               <FcGoogle className='ml-2' />
-            </header>
-            {children}
-            <footer></footer>
+            <ToastProvider>
+               <header className='h-14 shadow-md mb-10 flex justify-center items-center'>
+                  <Title>PaLM Chatbot V1</Title>
+                  <FcGoogle className='ml-2' />
+               </header>
+               {children}
+               <footer></footer>
+            </ToastProvider>
          </body>
       </html>
    )

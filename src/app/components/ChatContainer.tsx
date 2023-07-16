@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Card, Title, Icon, TextInput, Button } from '@tremor/react'
+import { Card, Title, Icon, TextInput, Button, Text } from '@tremor/react'
 import axios, { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { ThreeDots } from 'react-loader-spinner'
@@ -24,15 +24,18 @@ const ChatContainer = () => {
    const [conversation, setConversation] = useState<{ author: string; content: string }[]>([])
    const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true)
    const [isLoading, setIsLoading] = useState<boolean>(false)
+   const [isErrorPalm, setIsErrorPalm] = useState<boolean>(false)
 
    const handleOnChangeinput = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setMessage(e.target.value)
-      if (e.target.value.length > 2) {
-         setIsButtonDisabled(false)
-      }
+      if (!isErrorPalm) {
+         setMessage(e.target.value)
+         if (e.target.value.length > 2) {
+            setIsButtonDisabled(false)
+         }
 
-      if (e.target.value.length < 2) {
-         setIsButtonDisabled(true)
+         if (e.target.value.length < 2) {
+            setIsButtonDisabled(true)
+         }
       }
    }
 
@@ -41,6 +44,7 @@ const ChatContainer = () => {
    const onSubmit = async () => {
       try {
          setIsLoading(true)
+         setMessage('')
          setIsButtonDisabled(true)
 
          // Send without author because it's not handle by the API
@@ -58,10 +62,7 @@ const ChatContainer = () => {
          )
 
          if (response?.data[0]?.candidates[0]?.content === undefined) {
-            toast.error(
-               'Something went wrong maybe your question was not understood by the AI, please reload the page and try again.',
-            )
-            throw new Error('Error')
+            throw new Error('PaLM does not provide an answer')
          }
 
          setConversation([
@@ -70,11 +71,21 @@ const ChatContainer = () => {
             { author: '1', content: response?.data[0]?.candidates[0]?.content },
          ])
 
-         setMessage('')
          setIsButtonDisabled(false)
       } catch (error) {
+         setIsErrorPalm(true)
          toast.error(
-            'Something went wrong maybe your question was not understood by the AI. Please reload the page and try again.',
+            'Something went wrong, maybe your question was not understood by the AI. Please reload the page and try again.',
+            {
+               position: 'top-right',
+               autoClose: false,
+               hideProgressBar: false,
+               closeOnClick: true,
+               pauseOnHover: true,
+               draggable: true,
+               progress: undefined,
+               theme: 'light',
+            },
          )
          console.error(error)
          throw new Error('Error' + error)
@@ -139,7 +150,7 @@ const ChatContainer = () => {
             </div>
             <div className='flex gap-3'>
                <TextInput
-                  placeholder='Ask everything you want...'
+                  placeholder='Ask everything you want... (You must be in United state for using the chatbot, you can use a VPN.)'
                   onChange={(e) => {
                      handleOnChangeinput(e)
                   }}
