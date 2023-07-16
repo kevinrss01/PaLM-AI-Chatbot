@@ -19,8 +19,6 @@ interface PalmResponse {
    filters: any[]
 }
 
-const myUrl = 'https://pa-lm-ai-chatbot-fajpzsa6n-kevinrss01.vercel.app/'
-
 const ChatContainer = () => {
    const [message, setMessage] = useState<string>('')
    const [conversation, setConversation] = useState<{ author: string; content: string }[]>([])
@@ -58,7 +56,7 @@ const ChatContainer = () => {
 
          setConversation([...conversation, { author: '0', content: message }])
 
-         const response: AxiosResponse<PalmResponse> = await axios.post(myUrl, {
+         const response: AxiosResponse<PalmResponse> = await axios.post('/api/palm', {
             conversation: conversationWithoutAuthor,
          })
 
