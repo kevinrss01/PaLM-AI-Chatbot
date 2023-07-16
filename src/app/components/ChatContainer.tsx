@@ -61,6 +61,7 @@ const ChatContainer = () => {
             { conversation: conversationWithoutAuthor },
          )
 
+         // @ts-ignore
          if (response?.data[0]?.candidates[0]?.content === undefined) {
             throw new Error('PaLM does not provide an answer')
          }
@@ -68,6 +69,7 @@ const ChatContainer = () => {
          setConversation([
             ...conversation,
             { author: '0', content: message },
+            // @ts-ignore
             { author: '1', content: response?.data[0]?.candidates[0]?.content },
          ])
 
