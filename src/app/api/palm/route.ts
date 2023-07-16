@@ -18,7 +18,7 @@ interface Conversation {
    }[]
 }
 
-export const callApi = async (conversation: {}[]): Promise<any> => {
+const callApi = async (conversation: {}[]): Promise<any> => {
    try {
       const result = await client.generateMessage({
          model: MODEL_NAME,
@@ -30,7 +30,7 @@ export const callApi = async (conversation: {}[]): Promise<any> => {
          },
       })
 
-      if (!Array.isArray(result) || result.length === 0) {
+      if (!Array.isArray(result)) {
          throw new Error('Result is not an array')
          return
       }
