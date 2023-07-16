@@ -39,8 +39,6 @@ const ChatContainer = () => {
       }
    }
 
-   //TODO: Gestion des erreur à terminée, toast ne s'affiche pas (ne renvoi pas de réponse pour les questions qu'il ne comprend pas, par exemple celle en français)
-
    const onSubmit = async () => {
       try {
          setIsLoading(true)
