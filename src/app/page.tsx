@@ -3,7 +3,7 @@ import ChatContainer from './components/ChatContainer'
 
 export default function Home() {
    return (
-      <div className='flex justify-center'>
+      <div className='flex justify-center items-center'>
          <ChatContainer />
       </div>
    )
