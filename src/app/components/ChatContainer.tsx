@@ -149,7 +149,7 @@ const ChatContainer = () => {
             </div>
             <div className='flex gap-3'>
                <TextInput
-                  placeholder='Ask everything you want... (You must be in United state for using the chatbot, you can use a VPN.)'
+                  placeholder='Ask everything you want...'
                   onChange={(e) => {
                      handleOnChangeinput(e)
                   }}
